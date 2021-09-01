@@ -54,7 +54,11 @@ def main():
     while True:
         try:
             url = 'https://dvmn.org/api/long_polling/'
-            response = get_long_polling_review(url, TOKEN_API_DEVMAN, timestamp)
+            response = get_long_polling_review(
+                url,
+                TOKEN_API_DEVMAN,
+                timestamp
+            )
             if response['status'] == 'found':
                 timestamp = response['last_attempt_timestamp']
             else:
@@ -70,4 +74,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
