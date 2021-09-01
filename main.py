@@ -19,9 +19,11 @@ def get_long_polling_review(url, token_api_devman, timestamp=None):
 
 def send_message_using_bot(bot, chat_id, response):
 
-    is_negative_review = response['new_attempts'][0]['is_negative']
-    lesson_title = response['new_attempts'][0]['lesson_title']
-    relative_lesson_url = response['new_attempts'][0]['lesson_url']
+    for new_attempt in response['new_attempts']:
+        is_negative_review = new_attempt['is_negative']
+        lesson_title = new_attempt['lesson_title']
+        relative_lesson_url = new_attempt['lesson_url']
+
     lesson_url = urljoin('https://dvmn.org', relative_lesson_url)
     if is_negative_review:
         text_message = f'''\
