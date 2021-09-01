@@ -1,4 +1,5 @@
 import os
+import time
 from textwrap import dedent
 
 import requests
@@ -49,6 +50,7 @@ def main():
 
     bot = telegram.Bot(token=TOKEN)
     timestamp = None
+    failed_connections = 0
     while True:
         try:
             url = 'https://dvmn.org/api/long_polling/'
@@ -61,7 +63,9 @@ def main():
         except requests.exceptions.ReadTimeout:
             pass
         except requests.exceptions.ConnectionError:
-            pass
+            failed_connections += 1
+            if failed_connections % 5 == 0:
+                time.sleep(60)
 
 
 if __name__ == '__main__':
