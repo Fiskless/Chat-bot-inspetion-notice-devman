@@ -25,20 +25,20 @@ def send_message_using_bot(bot, chat_id, response):
         lesson_title = new_attempt['lesson_title']
         relative_lesson_url = new_attempt['lesson_url']
 
-    lesson_url = urljoin('https://dvmn.org', relative_lesson_url)
-    if is_negative_review:
-        text_message = f'''\
-            У вас проверили работу "{lesson_title}." 
-            К сожалению, в работе нашлись ошибки. 
-            Посмотреть их можно по ссылке: {lesson_url}\
-        '''
-    else:
-        text_message = f'''\
-            У вас проверили работу "{lesson_title}"  
-            Преподавателю все понравилось, можно приступать к следующему уроку. 
-            Для этого можно перейти по ссылке: {lesson_url}\
-        '''
-    bot.send_message(chat_id=chat_id, text=dedent(text_message))
+        lesson_url = urljoin('https://dvmn.org', relative_lesson_url)
+        if is_negative_review:
+            text_message = f'''\
+                У вас проверили работу "{lesson_title}." 
+                К сожалению, в работе нашлись ошибки. 
+                Посмотреть их можно по ссылке: {lesson_url}\
+            '''
+        else:
+            text_message = f'''\
+                У вас проверили работу "{lesson_title}"  
+                Преподавателю все понравилось, можно приступать к следующему уроку. 
+                Для этого можно перейти по ссылке: {lesson_url}\
+            '''
+        bot.send_message(chat_id=chat_id, text=dedent(text_message))
 
 
 def main():
