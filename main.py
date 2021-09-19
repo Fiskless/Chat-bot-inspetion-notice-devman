@@ -1,3 +1,4 @@
+import logging
 import os
 import time
 from textwrap import dedent
@@ -49,6 +50,7 @@ def main():
     TOKEN_API_DEVMAN = os.getenv("TOKEN_API_DEVMAN")
 
     bot = telegram.Bot(token=TOKEN)
+    logging.warning('Бот запущен')
     timestamp = None
     failed_connections = 0
     while True:
