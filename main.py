@@ -67,9 +67,9 @@ def main():
     logger.addHandler(TelegramLogsHandler(bot, CHAT_ID))
     timestamp = None
     failed_connections = 0
-    logger.warning("Бот запущен")
     while True:
         try:
+            logger.warning("Бот запущен")
             url = 'https://dvmn.org/api/long_polling/'
             response = get_long_polling_review(
                 url,
