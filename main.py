@@ -9,6 +9,18 @@ from dotenv import load_dotenv
 from urllib.parse import urljoin
 
 
+class TelegramLogsHandler(logging.Handler):
+
+    def __init__(self, tg_bot, chat_id):
+        super().__init__()
+        self.chat_id = chat_id
+        self.tg_bot = tg_bot
+
+    def emit(self, record):
+        log_entry = self.format(record)
+        self.tg_bot.send_message(chat_id=self.chat_id, text=log_entry)
+
+
 def get_long_polling_review(url, token_api_devman, timestamp=None):
     payload = {'timestamp': timestamp}
     headers = {
@@ -50,9 +62,12 @@ def main():
     TOKEN_API_DEVMAN = os.getenv("TOKEN_API_DEVMAN")
 
     bot = telegram.Bot(token=TOKEN)
-    logging.warning('Бот запущен')
+    logger = logging.getLogger('tg_logger')
+    logger.setLevel(logging.WARNING)
+    logger.addHandler(TelegramLogsHandler(bot, CHAT_ID))
     timestamp = None
     failed_connections = 0
+    logger.warning("Бот запущен")
     while True:
         try:
             url = 'https://dvmn.org/api/long_polling/'
@@ -72,6 +87,8 @@ def main():
             failed_connections += 1
             if failed_connections % 5 == 0:
                 time.sleep(60)
+        except Exception:
+            logger.exception("Бот упал с ошибкой")
 
 
 if __name__ == '__main__':
