@@ -57,15 +57,15 @@ def send_message_using_bot(bot, chat_id, response):
 def main():
     load_dotenv()
 
-    TOKEN_NOTIFICATION_BOT = os.getenv("TOKEN_NOTIFICATION_BOT")
-    CHAT_ID = os.getenv("CHAT_ID")
-    TOKEN_API_DEVMAN = os.getenv("TOKEN_API_DEVMAN")
-    TOKEN_LOGGER_BOT = os.getenv("TOKEN_LOGGER_BOT")
+    notification_bot_token = os.getenv("NOTIFICATION_BOT_TOKEN")
+    chat_id = os.getenv("CHAT_ID")
+    devman_api_token = os.getenv("DEVMAN_API_TOKEN")
+    logger_bot_token = os.getenv("LOGGER_BOT_TOKEN")
 
-    bot = telegram.Bot(token=TOKEN_NOTIFICATION_BOT)
+    bot = telegram.Bot(token=notification_bot_token)
     logger = logging.getLogger('tg_logger')
     logger.setLevel(logging.WARNING)
-    logger.addHandler(TelegramLogsHandler(TOKEN_LOGGER_BOT, CHAT_ID))
+    logger.addHandler(TelegramLogsHandler(logger_bot_token, chat_id))
     timestamp = None
     failed_connections = 0
     try:
@@ -75,14 +75,14 @@ def main():
                 url = 'https://dvmn.org/api/long_polling/'
                 response = get_long_polling_review(
                     url,
-                    TOKEN_API_DEVMAN,
+                    devman_api_token,
                     timestamp
                 )
                 if response['status'] == 'found':
                     timestamp = response['last_attempt_timestamp']
                 else:
                     timestamp = response['timestamp_to_request']
-                send_message_using_bot(bot, CHAT_ID, response)
+                send_message_using_bot(bot, chat_id, response)
             except requests.exceptions.ReadTimeout:
                 pass
             except requests.exceptions.ConnectionError:
