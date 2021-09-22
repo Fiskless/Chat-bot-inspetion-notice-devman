@@ -9,6 +9,9 @@ from dotenv import load_dotenv
 from urllib.parse import urljoin
 
 
+logger = logging.getLogger('tg_logger')
+
+
 class TelegramLogsHandler(logging.Handler):
 
     def __init__(self, token, chat_id):
@@ -63,7 +66,7 @@ def main():
     logger_bot_token = os.getenv("LOGGER_BOT_TOKEN")
 
     bot = telegram.Bot(token=notification_bot_token)
-    logger = logging.getLogger('tg_logger')
+
     logger.setLevel(logging.WARNING)
     logger.addHandler(TelegramLogsHandler(logger_bot_token, chat_id))
     timestamp = None
