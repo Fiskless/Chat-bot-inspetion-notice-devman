@@ -72,7 +72,6 @@ def main():
     timestamp = None
     failed_connections = 0
     try:
-        logger.warning("Бот запущен")
         while True:
             try:
                 url = 'https://dvmn.org/api/long_polling/'
