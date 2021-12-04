@@ -52,7 +52,14 @@
 - На вкладке Deploy вашего приложения в графе Manual Deploy нажмите Deploy Branch. 
 - Наслаждайтесь работой скрипта. В случае каких-либо ошибок загляните в Heroku LCI.
 
+## Инструкция по запуску на Docker
 
+Данный проект выложен на [DockerHub](https://hub.docker.com/)
+
+Для запуска необходимо в консоли воспользоваться следующей командой:
+  ```sh
+  docker run -e NOTIFICATION_BOT_TOKEN=your_token -e CHAT_ID=your_chat_id -e DEVMAN_API_TOKEN=your_devman_api_token -e LOGGER_BOT_TOKEN=your_logger_bot_token -dp 3000:3000 fiskless/chat-bot-inspetion-notice-devman
+  ```
 ## Цели проекта
 
 Код написан в образовательных целях на онлайн-курсе для веб-разработчиков [dvmn.org](https://dvmn.org/).
